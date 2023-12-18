@@ -1,11 +1,14 @@
-import React from 'react'
+import React from "react";
+import Navbar from "../../components/Navbar/Navbar";
 
 function ViewPost() {
   return (
-    <div>
-      <h1>View Post</h1>
-    </div>
-  )
+    <>
+      <div className="sticky top-0">
+        <Navbar />
+      </div>
+    </>
+  );
 }
 
-export default ViewPost
+export default ViewPost;

@@ -1,13 +1,16 @@
 import { Button } from '@mui/material'
 import React from 'react'
+import Navbar from '../../components/Navbar/Navbar'
 
 
 function Home() {
   return (
-    <div>
-      <h1 className=''>home</h1>
+    <>
+      <div className='sticky top-0'>
+        <Navbar/>
+      </div>
       
-    </div>
+    </>
   )
 }
 
