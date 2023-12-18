@@ -1,0 +1,9 @@
+.card-container{
+    overflow-y: scroll;
+}
+
+.card-container::-webkit-scrollbar {
+    width: 0;
+    background: transparent; /* optional: makes scrollbar space transparent */
+  
+  }
