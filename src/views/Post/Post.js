@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import axios from "axios";
 import "./Post.css";
+import { Button } from "@mui/material";
 
 function Post() {
   const [postData, setPostData] = useState([]);
@@ -33,9 +34,6 @@ function Post() {
                 className="transaction-card  relative mx-auto my-3 rounded-md  border-2 p-4 py-6 md:w-4/5 lg:w-3/6"
                 style={{ boxShadow: "3px 3px 2px rgba(0, 0, 0, 0.3)" }}
               >
-                <p className="absolute left-[120px] top-3">
-
-                </p>
                 <p className="absolute left-6 top-3">
                   {" "}
                   <span className="font-bold text-blue-700 ">
@@ -50,7 +48,13 @@ function Post() {
                   </span>{" "}
                   {title}
                 </p>
-                
+                <p className="absolute bottom-2 right-5 top-3 ">
+                  <a href={`/viewpost/${id}`}>
+                    <Button variant="contained" size="small">
+                      View Details
+                    </Button>
+                  </a>
+                </p>
               </div>
             </div>
           );
