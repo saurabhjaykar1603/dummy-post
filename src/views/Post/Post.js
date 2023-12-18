@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import axios from "axios";
 import "./Post.css";
 import { Button } from "@mui/material";
+import showToast from "crunchy-toast";
 
 function Post() {
   const [postData, setPostData] = useState([]);
@@ -11,6 +12,9 @@ function Post() {
       "https://jsonplaceholder.typicode.com/posts",
     );
     console.log(response?.data);
+    if (response?.data) {
+      showToast("See all Post", "success", 5000);
+    }
     setPostData(response?.data);
   };
   useEffect(() => {

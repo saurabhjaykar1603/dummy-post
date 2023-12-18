@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import showToast from "crunchy-toast";
+
 
 function ViewPost() {
   const { id } = useParams();
@@ -11,6 +13,9 @@ function ViewPost() {
       `https://jsonplaceholder.typicode.com/posts/${id}`,
     );
     console.log(response?.data);
+    if (response?.data) {
+      showToast("See Post Details", "success", 5000);
+    }
     setPostData(response?.data);
   };
   useEffect(() => {
