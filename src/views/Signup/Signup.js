@@ -33,13 +33,18 @@ function Signup() {
         setSubmitButtonDisabled(false);
         const user = res.user;
         await updateProfile(user, { displayName: value.name });
-        navigate("/");
+        if(res){
+
+          navigate("/post");
+        }
       })
       .catch((err) => {
         console.log("Error: " + err);
         setSubmitButtonDisabled(false);
         showToast(`Hey User${err.message}`, "warning", 3000);
       });
+
+      
   };
 
   return (
