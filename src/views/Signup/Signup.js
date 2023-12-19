@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import { Link } from "react-router-dom";
 import showToast from "crunchy-toast";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
 
 function Signup() {
   const [value, setValue] = useState({
@@ -21,6 +23,13 @@ function Signup() {
       return showToast("Please enter password", "warnig", 3000);
     }
     console.log(value);
+    createUserWithEmailAndPassword(auth, value.email, value.password)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log("Error: " + err);
+      });
   };
 
   return (
