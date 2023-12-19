@@ -2,22 +2,9 @@ import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import homeImg from "./images/hompost.png";
-import { auth } from "../../firebase";
 
 function Home() {
-  const [isUserAuthenticated, setIsserAuthenticated] = useState("");
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      console.log(user);
-      if (!user) {
-        setIsserAuthenticated(user?.displayName);
-      }
-      else{
-        setIsserAuthenticated("user")
-        window.location.href= "/login"
-      };
-    });
-  }, []);
+
   return (
     <>
       <div className="sticky top-0">
