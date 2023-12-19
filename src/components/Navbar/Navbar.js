@@ -61,7 +61,6 @@ function Navbar() {
       showToast(error.message, "warning", 4000);
     }
   };
-  
 
   return (
     <>
@@ -119,6 +118,18 @@ function Navbar() {
                   >
                     <ListItemText primary="Post" />
                   </ListItem>
+                  {isUserAuthenticated ? (
+                    <Button color="inherit">
+                      Hello 👋 {isUserAuthenticated}
+                    </Button>
+                  ) : (
+                    <Button> User</Button>
+                  )}
+                  {isUserAuthenticated ? (
+                    <Button color="inherit" onClick={handleLogout}>
+                      Log Out
+                    </Button>
+                  ) : null}
                 </List>
               </Drawer>
             </>
@@ -136,14 +147,11 @@ function Navbar() {
               <Button color="inherit" component={Link} to="/post">
                 Post
               </Button>
+
               {isUserAuthenticated ? (
                 <Button color="inherit">Hello 👋 {isUserAuthenticated}</Button>
               ) : (
-                <Button>
-                  {" "}
-                  User
-                  
-                </Button>
+                <Button> User</Button>
               )}
               {isUserAuthenticated ? (
                 <Button color="inherit" onClick={handleLogout}>
