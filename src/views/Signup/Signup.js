@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import { Link } from "react-router-dom";
+import showToast from "crunchy-toast";
 
 function Signup() {
   const [value, setValue] = useState({
@@ -8,7 +9,17 @@ function Signup() {
     email: "",
     password: "",
   });
+
   const handleSubmission = () => {
+    if (!value.name) {
+      return showToast("Please enter name", "warnig", 3000);
+    }
+    if (!value.email) {
+      return showToast("Please enter email", "warnig", 3000);
+    }
+    if (!value.password) {
+      return showToast("Please enter password", "warnig", 3000);
+    }
     console.log(value);
   };
 
