@@ -51,7 +51,7 @@ function Login() {
             Welcome back to <span className="text-blue-700">Dummy App</span>
           </div>
           <div className="mb-4 text-center text-sm font-normal text-[#1e0e4b]">
-            Signup to your account
+            Login to your account
           </div>
           <form className="flex flex-col gap-3">
             <div className="relative block">
