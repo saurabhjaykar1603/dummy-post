@@ -13,17 +13,22 @@ import {
   useTheme,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import showToast from "crunchy-toast";
 
 import { Link } from "react-router-dom";
 import { auth } from "../../firebase";
+import { getAuth, signOut } from "firebase/auth";
 
 function Navbar() {
   const [isUserAuthenticated, setIsserAuthenticated] = useState("");
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       console.log(user);
+      if (!user) {
+        return;
+      }
       if (user) {
-        setIsserAuthenticated(user.displayName);
+        setIsserAuthenticated(user?.displayName);
       } else {
         setIsserAuthenticated("user");
         window.location.href = "/login";
@@ -44,6 +49,19 @@ function Navbar() {
     }
     setDrawerOpen(open);
   };
+
+  const handleLogout = async () => {
+    try {
+      const auth = getAuth();
+      await signOut(auth);
+      showToast("Logout successful", "warning", 4000);
+      // Redirect to the login page after the toast message is displayed
+      window.location.href = "/login";
+    } catch (error) {
+      showToast(error.message, "warning", 4000);
+    }
+  };
+  
 
   return (
     <>
@@ -124,10 +142,14 @@ function Navbar() {
                 <Button>
                   {" "}
                   User
-                  <Button />
-                  Post
+                  
                 </Button>
               )}
+              {isUserAuthenticated ? (
+                <Button color="inherit" onClick={handleLogout}>
+                  Log Out
+                </Button>
+              ) : null}
             </>
           )}
         </Toolbar>
