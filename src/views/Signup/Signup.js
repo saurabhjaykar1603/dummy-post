@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import showToast from "crunchy-toast";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../../firebase";
+import "./Signup.css";
 
 function Signup() {
+  const navigate = useNavigate();
   const [value, setValue] = useState({
     name: "",
     email: "",
     password: "",
   });
+
+  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
 
   const handleSubmission = () => {
     if (!value.name) {
@@ -22,13 +26,19 @@ function Signup() {
     if (!value.password) {
       return showToast("Please enter password", "warnig", 3000);
     }
-    console.log(value);
+    setSubmitButtonDisabled(true);
     createUserWithEmailAndPassword(auth, value.email, value.password)
-      .then((res) => {
+      .then(async (res) => {
         console.log(res);
+        setSubmitButtonDisabled(false);
+        const user = res.user;
+        await updateProfile(user, { displayName: value.name });
+        navigate("/");
       })
       .catch((err) => {
         console.log("Error: " + err);
+        setSubmitButtonDisabled(false);
+        showToast(`Hey User${err.message}`, "warning", 3000);
       });
   };
 
@@ -104,8 +114,9 @@ function Signup() {
 
             <button
               type="button"
-              className="m-auto w-max rounded bg-blue-700 px-6 py-2 text-sm font-normal text-white"
+              className="signup-button m-auto w-max rounded bg-blue-700 px-6 py-2 text-sm font-normal text-white "
               onClick={handleSubmission}
+              disabled={submitButtonDisabled}
             >
               Submit
             </button>
