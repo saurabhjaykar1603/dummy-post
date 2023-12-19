@@ -3,11 +3,25 @@ import Navbar from "../../components/Navbar/Navbar";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import showToast from "crunchy-toast";
-
+import { auth } from "../../firebase";
 
 function ViewPost() {
   const { id } = useParams();
   const [postData, setPostData] = useState({});
+  const [isUserAuthenticated, setIsserAuthenticated] = useState("");
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      console.log(user);
+      if (user) {
+        setIsserAuthenticated(user.displayName);
+      } else {
+        alert("login First");
+        window.location.href = "/login";
+      }
+    });
+  }, []);
+
   const LoadPost = async () => {
     const response = await axios.get(
       `https://jsonplaceholder.typicode.com/posts/${id}`,

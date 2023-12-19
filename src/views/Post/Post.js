@@ -4,9 +4,12 @@ import axios from "axios";
 import "./Post.css";
 import { Button } from "@mui/material";
 import showToast from "crunchy-toast";
+import { auth } from "../../firebase";
 
 function Post() {
   const [postData, setPostData] = useState([]);
+  const [isUserAuthenticated, setIsserAuthenticated] = useState("");
+
   const LoadPost = async () => {
     const response = await axios.get(
       "https://jsonplaceholder.typicode.com/posts",
@@ -19,6 +22,18 @@ function Post() {
   };
   useEffect(() => {
     LoadPost();
+  }, []);
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      console.log(user);
+      if (user) {
+        setIsserAuthenticated(user.displayName);
+      } else {
+        alert("login First");
+        window.location.href = "/login";
+      }
+    });
   }, []);
   return (
     <>

@@ -1,9 +1,23 @@
 import { Button } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import homeImg from "./images/hompost.png";
+import { auth } from "../../firebase";
 
 function Home() {
+  const [isUserAuthenticated, setIsserAuthenticated] = useState("");
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      console.log(user);
+      if (!user) {
+        setIsserAuthenticated(user?.displayName);
+      }
+      else{
+        setIsserAuthenticated("user")
+        window.location.href= "/login"
+      };
+    });
+  }, []);
   return (
     <>
       <div className="sticky top-0">
@@ -18,7 +32,7 @@ function Home() {
           <h1 className="my-3 px-4 text-3xl font-bold text-stone-600">
             Welcome to{" "}
             <span className="text-blue-600 md:text-3xl lg:text-5xl ">
-              Dummy Post
+              Dummy Post 
             </span>
           </h1>
           <div className="p-3 md:w-[300px] lg:w-[600px] ">
