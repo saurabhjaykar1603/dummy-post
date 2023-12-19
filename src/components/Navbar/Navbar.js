@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -12,11 +12,24 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from "@mui/icons-material/Menu";
 
 import { Link } from "react-router-dom";
+import { auth } from "../../firebase";
 
 function Navbar() {
+  const [isUserAuthenticated, setIsserAuthenticated] = useState("");
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      console.log(user);
+      if (user) {
+        setIsserAuthenticated(user.displayName);
+      } else {
+        setIsserAuthenticated("user");
+        window.location.href = "/login";
+      }
+    });
+  }, []);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -37,7 +50,7 @@ function Navbar() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" style={{ flexGrow: 1 }}>
-          Dummy Post 📃
+            Dummy Post 📃
           </Typography>
 
           {isMobile ? (
@@ -56,16 +69,36 @@ function Navbar() {
                 onClose={toggleDrawer(false)}
               >
                 <List>
-                  <ListItem button component={Link} to="/" onClick={toggleDrawer(false)}>
+                  <ListItem
+                    button
+                    component={Link}
+                    to="/"
+                    onClick={toggleDrawer(false)}
+                  >
                     <ListItemText primary="Home" />
                   </ListItem>
-                  <ListItem button component={Link} to="/login" onClick={toggleDrawer(false)}>
+                  <ListItem
+                    button
+                    component={Link}
+                    to="/login"
+                    onClick={toggleDrawer(false)}
+                  >
                     <ListItemText primary="Login" />
                   </ListItem>
-                  <ListItem button component={Link} to="/signup" onClick={toggleDrawer(false)}>
+                  <ListItem
+                    button
+                    component={Link}
+                    to="/signup"
+                    onClick={toggleDrawer(false)}
+                  >
                     <ListItemText primary="Signup" />
                   </ListItem>
-                  <ListItem button component={Link} to="/post" onClick={toggleDrawer(false)}>
+                  <ListItem
+                    button
+                    component={Link}
+                    to="/post"
+                    onClick={toggleDrawer(false)}
+                  >
                     <ListItemText primary="Post" />
                   </ListItem>
                 </List>
@@ -85,6 +118,16 @@ function Navbar() {
               <Button color="inherit" component={Link} to="/post">
                 Post
               </Button>
+              {isUserAuthenticated ? (
+                <Button color="inherit">Hello 👋 {isUserAuthenticated}</Button>
+              ) : (
+                <Button>
+                  {" "}
+                  User
+                  <Button />
+                  Post
+                </Button>
+              )}
             </>
           )}
         </Toolbar>
